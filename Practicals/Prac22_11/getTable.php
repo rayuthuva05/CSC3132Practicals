@@ -38,11 +38,6 @@ try {
 	die($e->getMessage());
 }
 }
-
-
 PrintTable("students",$connect);
-
 PrintTable("module",$connect);
-
-
 ?>
