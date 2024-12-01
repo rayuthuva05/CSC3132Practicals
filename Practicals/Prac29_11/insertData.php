@@ -30,8 +30,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td></td>
-				<td><input type="submit" value="Add a new student" /></td>
+				<td align='center'><input type="submit" value="Submit" /></td>
+                <td align='center'><input type="reset" value="Reset" /></td>
 			</tr>
 		</table>
 	</form>
@@ -42,7 +42,7 @@
 			$sql = "INSERT INTO students VALUES('$reg','$name',$age,'$course')";
 			$result = mysqli_query($connect,$sql);
 			if ($result) {
-				echo "New student record created sucessfully";
+				//echo "New student record created sucessfully";
 			} else {
 				die("Error ".mysqli_error($connect));
 			}
