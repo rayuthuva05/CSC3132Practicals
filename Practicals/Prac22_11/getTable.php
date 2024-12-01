@@ -38,7 +38,7 @@ try {
 
 PrintTable("students",$connect);
 
-PrintTable("book",$connect);
+PrintTable("module",$connect);
 
 
 ?>
