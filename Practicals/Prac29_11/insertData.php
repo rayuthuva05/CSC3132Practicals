@@ -24,9 +24,8 @@
 				<td align="right">Course:</td>
 				<td>
 					<select name="course">
-						<option value="IT">IT</option>
-						<option value="ICT">ICT</option>
-						<option value="CSC">CSC</option>
+						<option value="AMC">AMC</option>
+						<option value="CS">CS</option>
 					</select>
 				</td>
 			</tr>
