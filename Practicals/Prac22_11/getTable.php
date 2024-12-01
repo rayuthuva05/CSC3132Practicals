@@ -12,9 +12,13 @@ try {
 	if (mysqli_num_rows($result)>0) {
 		echo "<table border='1'>";
 		$col = mysqli_fetch_fields($result);
+        $columns=mysqli_num_fields($result);
+        echo "<tr>";
+        echo "<th colspan='$columns'>$tableName</th>";
+        echo "</tr>";
 		echo "<tr>";
 		foreach ($col as $value) {
-			echo "<td>$value->name</td>";
+			echo "<th>$value->name</th>";
 		}
 		echo "</tr>";
 		
@@ -25,7 +29,7 @@ try {
 			}
 			echo "</tr>";
 		}
-		echo "</table>";
+		echo "</table>"."<br>";
 	} else {
 		echo "No results";
 	}
