@@ -1,4 +1,5 @@
 <?
+require_once 'dbconfig.php';
 function PrintTableCols($tableName,$connect,$colnames)
 {
 	try {
@@ -45,11 +46,7 @@ function PrintTableCols($tableName,$connect,$colnames)
 		die($e->getMessage());
 	}
 }
-PrintTableCols("books",$connect,["author","title","isbn"]);
-//select author,title,isbn from books
-//select
-//select author,
-//select author,title
-//select author,title,isbn,
-PrintTableCols("reviews",$connect,["reviewer_name","rating"]);
+PrintTableCols("module",$connect,["M_Code","No_Credits"]);
+
+PrintTableCols("students",$connect,["name","course"]);
 ?>
