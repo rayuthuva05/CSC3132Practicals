@@ -1,6 +1,6 @@
 <?php
 require_once 'dbconf.php';
-function PrintTableCols($tableName,$connect,$colnames)
+function GetBookList($tableName,$connect,$colnames)
 {
 	try {
 
@@ -15,13 +15,14 @@ function PrintTableCols($tableName,$connect,$colnames)
 			echo "<table border='1'>";
 			$col = mysqli_fetch_fields($result);
             $cols=sizeof($colnames);
-            echo "<tr>";
-            echo "<th colspan=$cols>$tableName</th>";
-            echo "</tr>";
-			echo "<tr>";
+            //echo "<tr>";
+            //echo "<th colspan=$cols>$tableName</th>";
+           // echo "</tr>";
+			//echo "<tr>";
 			foreach ($col as $value) {
 				echo "<td>$value->name</td>";
 			}
+			echo "<td>view</td>";
 			echo "</tr>";
 			
 			while ($row = mysqli_fetch_assoc($result)) {
@@ -29,7 +30,10 @@ function PrintTableCols($tableName,$connect,$colnames)
 				foreach ($row as $key => $value) {
 					echo "<td>$value</td>";
 				}
+				$id=$row['id'];
+				echo "<td><a href='bookid.php?bookid=$id'>view</a></td>";
 				echo "</tr>";
+				
 			}
 			echo "</table>"."<br>";
 		} else {
@@ -41,5 +45,7 @@ function PrintTableCols($tableName,$connect,$colnames)
 	}
 }
 
-
+function GetBook($id,$connect){
+	
+}
 ?>
