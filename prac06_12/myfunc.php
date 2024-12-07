@@ -59,8 +59,8 @@ function GetBook($id,$connect){
 				echo "<table border=1> ";
 		
 			$col = mysqli_fetch_fields($result);
-		
-			echo "<tr>";
+			
+			
 			foreach ($col as $value) {
 				
 					echo "<td>".$value->name."</td>";
