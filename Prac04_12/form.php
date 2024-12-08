@@ -9,10 +9,9 @@
     <?php
     require_once 'dbconf.php';
     require_once 'myfunc.php';
-
-    echo $_SERVER['PHP_SELF'];
+	
     ?>
-	<form action="<php echo $_SERVER['PHP_SELF']; ?>" method="GET">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET">
 		<table>
 			<tr>
 				<td align="right">Name:</td>
@@ -26,5 +25,12 @@
 		</table>
 	</form>	
 
+	<?php
+
+	PrintTable ("students",$connect);
+	if (isset($_GET['search']) && $_GET['search'] != '') {
+		SearchData($_GET['search'],$connect);
+	}
+	?>
 </body>
 </html>
