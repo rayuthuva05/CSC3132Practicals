@@ -83,8 +83,8 @@
 </head>
 <body>
 <?php
-require_once 'conf/conf.php';
-require_once 'func/func.php';
+require_once 'conf.php';
+require_once 'func.php';
 ?>
 <div class="main">
     <div class="head">
@@ -103,8 +103,8 @@ require_once 'func/func.php';
         <div class="left">
             <div class="parking-container">
                 <?php
-                require_once 'conf/conf.php';
-                require_once 'func/func.php';
+                require_once 'conf.php';
+                require_once 'func.php';
                 $query="SELECT parking_slot,vehicle_no from parkinglog";
                    //this is my tried funtion i dont know about already given function
                     GetTableData2($query,$connection);

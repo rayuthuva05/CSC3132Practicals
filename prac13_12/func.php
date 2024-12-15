@@ -1,5 +1,5 @@
 <?php
-require_once 'conf/conf.php';
+require_once 'conf.php';
 function GetTableData($query,$connection){
 try{
     $result = mysqli_query($connection,$query);
