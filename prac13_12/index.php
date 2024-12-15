@@ -103,11 +103,18 @@ require_once 'func.php';
         <div class="left">
             <div class="parking-container">
                 <?php
-                require_once 'conf.php';
-                require_once 'func.php';
-                $query="SELECT parking_slot,vehicle_no from parkinglog";
-                   //this is my tried funtion i dont know about already given function
-                    GetTableData2($query,$connection);
+                $query = "select * from parkinglog";
+                $slots = GetTableData($query, $connection);
+                foreach ($slots as $slot) {
+                    $id = $slot['parking_slot'];
+                    $vno = $slot['vehicle_no'];
+                    if ($vno == 'EMPTY') {
+                        echo "<div>";
+                    } else {
+                        echo "<div style='background-color: coral'>";
+                    }
+                    echo "$id<br>$vno</div>";
+                }
                 ?>
             </div>
         </div>
@@ -124,7 +131,13 @@ require_once 'func.php';
                             </label>
                         </td>
                         <td>
-
+                        <?php
+                                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                                    echo "<label class='error'>";
+                                    $e4 = RequiredField("park", "Please select the option");
+                                    echo "</label>";
+                                }
+                                ?>
                         </td>
                     </tr>
                     <tr>
@@ -136,6 +149,20 @@ require_once 'func.php';
                         </td>
                         <td>
                             <label class="error">
+                            <?php
+                                if ($_SERVER['REQUEST_METHOD'] == 'POST' && $e4) {
+                                    echo "<label class='error'>";
+                                    $e1 = RequiredField("slot", "Please provide the slot number");
+                                    echo "</label>";
+                                    if ($_POST['park'] == 'alloc') {
+                                        if ($e1) {
+                                            echo "<label class='error'>";
+                                            $e3 = ValidateSlot("slot", $connection);
+                                            echo "</label>";
+                                        }
+                                    }
+                                }
+                                ?>
                             </label>
 
                         </td>
@@ -149,7 +176,15 @@ require_once 'func.php';
                         </td>
                         <td>
                             <label class="error">
-                                
+                            <?php
+                                if ($_SERVER['REQUEST_METHOD'] == 'POST' && $e4) {
+                                    if ($_POST['park'] == 'alloc') {
+                                        echo "<label class='error'>";
+                                        $e2 = RequiredField("vno", "Please provide the vehicle number");
+                                        echo "</label>";
+                                    }
+                                }
+                                ?>
                             </label>
                         </td>
                     </tr>
@@ -167,6 +202,19 @@ require_once 'func.php';
                     </tr>
                     <tr>
                         <td colspan="2">
+                        <?php
+                            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                                if($e4){
+                                    if ($e1 && $e3) {
+                                        $slot = $_POST['slot'];
+                                        $vno = $_POST['vno'];
+                                        $park = $_POST['park'];
+                                        ParkingUpdate($slot, $vno, $park, $connection);
+                                    }
+                                }
+
+                            }
+                            ?>
                         </td>
                     </tr>
                 </table>
