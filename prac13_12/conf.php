@@ -1,7 +1,7 @@
 <?php
-define('HOST', 'localhost');
+define('HOST', '127.0.0.1:3306');
 define('USERNAME', 'root');
-define('PWD', '');
+define('PWD', 'mariadb');
 define('DB', 'parking');
 
 try {

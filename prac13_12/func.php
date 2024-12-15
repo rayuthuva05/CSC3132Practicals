@@ -35,6 +35,10 @@ try {
             echo "<div>";
             foreach($row as $value){
                 echo  $value."<br>";
+                if($row!='empty'){
+                    echo "<div style='background-color:#FFBABA;'>";
+                    echo "</div>";
+                }
             }
             echo "</div>";
         }
