@@ -1,7 +1,7 @@
 <?php
 //get the database connection file
 require_once 'dbconf.php';
-function PrintTable($tableName,$connect){
+/*function PrintTable($tableName,$connect){
 try{
 	//Query
 	$sql = "SELECT * FROM $tableName";
@@ -44,12 +44,12 @@ try{
 catch(Exception $e){
 	die($e->getMessage());
 }
-}
+}*/
  //GET DATA FROM DB
- function Searchbook($book_id,$connect){
+ function employee($connect){
             try{
             
-                $sql = "SELECT book_id,title,genre FROM  books where book_id like '%$book_id%' ";
+                $sql = "SELECT EMP_ID,EMP_Name FROM  employee";
             
             
                 $result = mysqli_query($connect,$sql);
@@ -66,7 +66,57 @@ catch(Exception $e){
                     
                         echo "<td>".$value->name."</td>";
                     }
+
                     echo "<td> View details </td>";
+                    echo "</tr>";
+                    while($row = mysqli_fetch_assoc($result)){ 
+                    echo "<tr>";
+                    foreach ($row as $key => $value) {
+                        echo "<td>$value</td>";
+                    }
+                    $EMP_ID=$row['EMP_ID'];
+                    //query string
+                    echo "<td><a href='printtable.php? EMP_ID=$EMP_ID '> View </a> </td>";
+                    echo "</tr>";
+                    
+                    }
+
+                    echo "</table>";
+                } 
+                else{
+                    echo "No results"; 
+                }
+            
+                }
+            
+            
+            catch(Exception $e){
+                die($e->getMessage());
+            }
+        }
+
+
+
+         function Empdetails($EMP_ID,$connect){
+            try{
+            
+                $sql = "SELECT * FROM  employee where  EMP_ID = $EMP_ID ";
+            
+            
+                $result = mysqli_query($connect,$sql);
+            
+                if (mysqli_num_rows($result)>0) {
+                
+            
+                    echo "<table border=1> ";
+            
+                $col = mysqli_fetch_fields($result);
+            
+                echo "<tr>";
+                foreach ($col as $value) {
+                    
+                        echo "<td>".$value->name."</td>";
+                    }
                     echo "</tr>";
                     while($row = mysqli_fetch_assoc($result)){
                         
@@ -74,9 +124,6 @@ catch(Exception $e){
                     foreach ($row as $key => $value) {
                         echo "<td>$value</td>";
                     }
-                    $book_id=$row['book_id'];
-                    echo "<td><a href='printtable.php? book_id=$book_id '> View </a> </td>";
-
                     echo "</tr>";
                     }
                     echo "</table>";
@@ -93,78 +140,139 @@ catch(Exception $e){
             }
         }
 
-
-        function Libdetails($book_id, $connect) {
-            try {
-                $sql = "SELECT * FROM books WHERE book_id = $book_id";
-                $result = mysqli_query($connect, $sql);
-        
-                if (mysqli_num_rows($result) > 0) {
-                    echo "<table border=1>";
-        
-                    $col = mysqli_fetch_fields($result);
-                    echo "<tr>";
-                    foreach ($col as $value) {
-                        echo "<td>" . $value->name . "</td>";
-                    }
-                    echo "<td>Author Details</td>";
-                    echo "</tr>";
-        
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr>";
-                        foreach ($row as $key => $value) {
-                            echo "<td>$value</td>";
-                        }
-        
-                        echo "<td><a href='printtable.php?book_id=$book_id&view=authors'>View Authors</a></td>";
-                        echo "</tr>";
-                    }
-                    echo "</table>";
-                } else {
-                    echo "No results";
-                }
-            } catch (Exception $e) {
-                die($e->getMessage());
-            }
-        }
-        
-        function Jointable($book_id, $connect) {
-            try {
-                $sql = "SELECT a.name, a.birth_year, a.death_year 
-                        FROM books b 
-                        INNER JOIN book_authors ba ON b.book_id = ba.book_id 
-                        INNER JOIN authors a ON ba.author_id = a.author_id 
-                        WHERE b.book_id = $book_id";
-        
-                $result = mysqli_query($connect, $sql);
-        
-                if (mysqli_num_rows($result) > 0) {
-                    echo "<h3>Author Details</h3>";
-                    echo "<table border=1>";
+       /* 
+	Join the tables
+       function Jointable($EMP_ID,$connect){
+            try{
+            
+                $sql = "SELECT * FROM  employee , department join '$EMP_Name' = '$EMP_Name' where  ;
+            
+            
+                $result = mysqli_query($connect,$sql);
+            
+                if (mysqli_num_rows($result)>0) {
+                
+            
+                    echo "<table border=1> ";
+            
+                $col = mysqli_fetch_fields($result);
+            
+                echo "<tr>";
+                foreach ($col as $value) {
                     
-                    // Print column headers
-                    $col = mysqli_fetch_fields($result);
-                    echo "<tr>";
-                    foreach ($col as $value) {
-                        echo "<td>" . $value->name . "</td>";
+                        echo "<td>".$value->name."</td>";
                     }
                     echo "</tr>";
-        
-                    // Print data rows
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr>";
-                        foreach ($row as $key => $value) {
-                            echo "<td>$value</td>";
-                        }
-                        echo "</tr>";
+                    while($row = mysqli_fetch_assoc($result)){
+                        
+                    echo "<tr>";
+                    foreach ($row as $key => $value) {
+                        echo "<td>$value</td>";
+                    }
+                    echo "</tr>";
                     }
                     echo "</table>";
-                } else {
-                    echo "No author details found.";
+                } 
+                else{
+                    echo "No results"; 
                 }
-            } catch (Exception $e) {
+            
+                }
+            
+            
+            catch(Exception $e){
                 die($e->getMessage());
             }
-        }
-        
+        }*/
+?>
+<?php
+require_once 'dbconf.php';
+function GetBookList($tableName,$connect,$colnames)
+{
+	try {
+
+		$sql = "SELECT ";
+		for ($i=0; $i < sizeof($colnames)-1; $i++) { 
+			$sql .=$colnames[$i].",";
+		}
+		$sql .=$colnames[sizeof($colnames)-1]." from $tableName";
+		
+		$result = mysqli_query($connect,$sql);
+		if (mysqli_num_rows($result)>0) {
+			echo "<table border='1'>";
+			$col = mysqli_fetch_fields($result);
+            $cols=sizeof($colnames);
+            //echo "<tr>";
+            //echo "<th colspan=$cols>$tableName</th>";
+           // echo "</tr>";
+			//echo "<tr>";
+			foreach ($col as $value) {
+				echo "<td>$value->name</td>";
+			}
+			echo "<td>view</td>";
+			echo "</tr>";
+			
+			while ($row = mysqli_fetch_assoc($result)) {
+				echo "<tr>";
+				foreach ($row as $key => $value) {
+					echo "<td>$value</td>";
+				}
+				$id=$row['id'];
+				echo "<td><a href='bookid.php?bookid=$id'>view</a></td>";
+				echo "</tr>";
+				
+			}
+			echo "</table>"."<br>";
+		} else {
+			echo "No results";
+		}
+		
+	} catch (Exception $e) {
+		die($e->getMessage());
+	}
+}
+
+function GetBook($id,$connect){
+		try{
+		
+			$sql = "SELECT * FROM  books where  id = '$id' ";
+		
+		
+			$result = mysqli_query($connect,$sql);
+		
+			if (mysqli_num_rows($result)>0) {
+			
+		
+				echo "<table border=1> ";
+		
+			$col = mysqli_fetch_fields($result);
+			
+			
+			foreach ($col as $value) {
+				
+					echo "<td>".$value->name."</td>";
+				}
+				echo "</tr>";
+				while($row = mysqli_fetch_assoc($result)){
+					
+				echo "<tr>";
+				foreach ($row as $key => $value) {
+					echo "<td>$value</td>";
+				}
+				echo "</tr>";
+				}
+				echo "</table>";
+			} 
+			else{
+				echo "No results"; 
+			}
+		
+			}
+		
+		
+		catch(Exception $e){
+			die($e->getMessage());
+		}
+	}
+
 ?>
